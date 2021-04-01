@@ -20,7 +20,15 @@ function init() {
     console.log(samples[0].otu_ids.slice(0,10))
     console.log(samples[0].sample_values.slice(0,10))
 
-    // Create Bar CHart of top 10 OTUs
+    // Create Data Table 
+    // Get a reference to the table body
+    var tbody = d3.select("tbody");
+    Object.entries(metadata[0]).forEach(([key, value]) => {
+      var row = tbody.append("tr");
+      row.text(`${key}: ${value}`);
+    });
+
+    // Create Bar Chart of top 10 OTUs
     var data_bar = [{
       type: 'bar',
       x: samples[0].sample_values.slice(0,10).reverse(),
@@ -29,8 +37,14 @@ function init() {
       orientation: 'h'
     }];
 
+
     var layout_bar = {
-      title: ` Top 10 OTUs found in Test Subject`,
+      title:{
+        text: ` Top 10 OTUs found in Test Subject`
+      } ,
+      xaxis: {
+        title: `Sample Values`
+      }
     };
 
     Plotly.newPlot('bar', data_bar,layout_bar);
@@ -47,7 +61,20 @@ function init() {
       }
     }];
 
-    Plotly.newPlot('bubble', data_bubble);
+    // Bubble Chart Layout
+    var layout_bubble = {
+      title:{
+        text: ` OTU IDs and Corresponding Sample Values`
+      } ,
+      xaxis: {
+        title: `OTU ID`
+      },
+      yaxis: {
+        title: `Sample Value`
+      }
+    };
+
+    Plotly.newPlot('bubble', data_bubble,layout_bubble);
   })
 };
 
@@ -80,7 +107,22 @@ function updatePlotly() {
 
     //Restyle Bubble Chart Based on Selection
 
+    Plotly.restyle("bubble", "x", [samples[(subj_ids.indexOf(sel_sample))].otu_ids]);
+    Plotly.restyle("bubble", "y", [samples[(subj_ids.indexOf(sel_sample))].sample_values]);
+    Plotly.restyle("bubble", "text", [samples[(subj_ids.indexOf(sel_sample))].otu_labels]);
+
     // Update Demographic info table based on selection
+    // Then, select the unordered tbofy element by class name
+    var tbody = d3.select("tbody");
+    // remove any children from the tbody
+    tbody.html("");
+
+    // Ceate Demographics table based on selection
+    Object.entries(metadata[(subj_ids.indexOf(sel_sample))]).forEach(([key, value]) => {
+      var row = tbody.append("tr");
+      row.text(`${key}: ${value}`);
+    });
+    
 
   }); 
 }
