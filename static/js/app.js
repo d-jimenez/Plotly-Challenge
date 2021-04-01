@@ -40,7 +40,7 @@ function init() {
 
     var layout_bar = {
       title:{
-        text: ` Top 10 OTUs found in Test Subject`
+        text: ` Top 10 OTUs Found in Test Subject`
       } ,
       xaxis: {
         title: `Sample Values`
