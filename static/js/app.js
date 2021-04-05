@@ -7,6 +7,8 @@ function init() {
     var metadata = data.metadata;
     var samples = data.samples;
 
+    console.log(subj_ids.length)
+
     // Insert the OTU IDs into the selection tag as options
     d3.select("select")
     .selectAll("option")
