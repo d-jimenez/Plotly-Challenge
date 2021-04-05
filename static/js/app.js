@@ -19,8 +19,8 @@ function init() {
     .text((ids) => ids);
 
     // Console log the first 10 oyt_ids and sample_values
-    console.log(samples[0].otu_ids.slice(0,10))
-    console.log(samples[0].sample_values.slice(0,10))
+    // console.log(samples[0].otu_ids.slice(0,10))
+    // console.log(samples[0].sample_values.slice(0,10))
 
     // Create Data Table 
     // Get a reference to the table body
