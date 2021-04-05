@@ -77,6 +77,21 @@ function init() {
     };
 
     Plotly.newPlot('bubble', data_bubble,layout_bubble);
+
+    // Create Gauge Chart
+    var data_gauge=[
+      {
+        domain: {x:[0,1], y: [0,1]},
+        value: metadata[0].wfreq,
+        title:{text: "Weekly Washing Frequency"},
+        type: "indicator",
+        mode: "gauge+number",
+        delta: {reference: 5},
+        gauge: {axis:{range:[0,9]}}
+      }
+    ]
+    Plotly.newPlot('gauge', data_gauge);
+
   })
 };
 
@@ -112,6 +127,9 @@ function updatePlotly() {
     Plotly.restyle("bubble", "x", [samples[(subj_ids.indexOf(sel_sample))].otu_ids]);
     Plotly.restyle("bubble", "y", [samples[(subj_ids.indexOf(sel_sample))].sample_values]);
     Plotly.restyle("bubble", "text", [samples[(subj_ids.indexOf(sel_sample))].otu_labels]);
+
+    // Restyle Gauge Chart on Selection
+    Plotly.restyle("gauge","value",metadata[(subj_ids.indexOf(sel_sample))].wfreq)
 
     // Update Demographic info table based on selection
     // Then, select the unordered tbofy element by class name
